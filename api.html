@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div>
+            <center>
+                <form id="myForm" method="post">
+                    <input id="name" placeholder="Name" />
+                    <br></br>
+                    <input id="mobile" placeholder="Mobile" />
+                    <br><br>
+                    <input id="email" placeholder="Email" />
+                    <br><br>
+                    <input id="ticket_type" placeholder="Ticket Type" />
+                    <br><br>
+                    <input id="count" placeholder="Count" />
+                    <br><br>
+                    <button id="postButton" type="button">Submit</button>
+                </form> 
+            </center>
+        </div>
+    </div>
+    <script>
+        const postButton = document.getElementById("postButton");
+        const myForm = document.getElementById("myForm");
+    
+        postButton.addEventListener("click", () => {
+            const data = {
+                name: document.getElementById("name").value,
+                mobile : document.getElementById("mobile").value,
+                email: document.getElementById("email").value,
+                ticket_type: document.getElementById("ticket_type").value,
+                count: document.getElementById("count").value
+            };
+    
+            fetch("http://192.168.29.120:8080/v1/ticket/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Log the response for debugging
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+            });
+        });
+    </script>
+    
+    <!-- <script src="api.js"></script> -->
+</body>
+</html>
